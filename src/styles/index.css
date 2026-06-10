@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: theme('fontFamily.sans');
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  @apply bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100;
+  background-image:
+    theme('backgroundImage.aurora'),
+    repeating-linear-gradient(90deg, rgba(22,163,74,.05) 0 1px, transparent 1px 72px),
+    linear-gradient(180deg, rgba(255,255,255,.98), rgba(240,253,244,.86));
+  background-size: 100% 100%, auto, 32px 32px, 100% 100%;
+  background-attachment: fixed;
+}
+
+.dark body {
+  background-image:
+    theme('backgroundImage.aurora-dark'),
+    repeating-linear-gradient(90deg, rgba(74,222,128,.07) 0 1px, transparent 1px 72px),
+    linear-gradient(180deg, rgba(15,23,42,.98), rgba(2,6,23,.96));
+}
+
+@layer components {
+  /* ---- Buttons ---- */
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand-gradient text-white shadow-lift hover:-translate-y-0.5 hover:shadow-[0_18px_42px_-16px_rgba(22,163,74,.5)] active:translate-y-0;
+  }
+  .btn-secondary {
+    @apply btn border border-slate-200 bg-white/95 text-slate-700 shadow-sm hover:border-slate-300 hover:bg-white hover:shadow-md dark:border-slate-700 dark:bg-slate-800/85 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white shadow-sm hover:bg-red-700;
+  }
+  .btn-ghost {
+    @apply btn text-slate-600 hover:bg-slate-200/60 dark:text-slate-300 dark:hover:bg-slate-800/70;
+  }
+
+  /* ---- Surfaces ---- */
+  .card {
+    @apply rounded-lg border border-white/70 bg-white/95 shadow-soft backdrop-blur-sm transition-shadow duration-200 dark:border-slate-700/70 dark:bg-slate-900/85;
+  }
+  .glass {
+    @apply border border-white/50 bg-white/75 backdrop-blur-md dark:border-white/10 dark:bg-slate-900/65;
+  }
+
+  /* ---- Form controls ---- */
+  .input {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/15 dark:border-slate-700 dark:bg-slate-800/95 dark:text-slate-100;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium;
+  }
+
+  /* ---- Misc ---- */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium;
+  }
+}
+
+/* Tidy custom scrollbars. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300/80 dark:bg-slate-700;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400 dark:bg-slate-600;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
