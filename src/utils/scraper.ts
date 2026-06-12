@@ -14,7 +14,7 @@
  * candidates then validate by digit count.
  */
 const PHONE_REGEX =
-  /(?:(?:\+|00)\d{1,3}[\s.-]?)?(?:\(\d{1,4}\)[\s.-]?)?\d{1,4}(?:[\s.-]?\d{2,4}){2,4}/g;
+  /(?:(?:\+|00)\d{1,3}[\s.-]?)?(?:\(\d{1,4}\)[\s.-]?)?\d{1,5}(?:[\s.-]?\d{2,5}){2,5}/g;
 
 /** Standard, intentionally strict-ish email matcher. */
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
@@ -61,16 +61,16 @@ function unique(values: string[]): string[] {
 
 /**
  * Extract phone numbers from arbitrary text. Validates each candidate by
- * requiring 7–15 digits (E.164 upper bound) and trims surrounding noise.
+ * requiring at least 7 digits (to avoid matching dates / ids) and trims
+ * surrounding noise. No upper bound: a country code plus a fully-grouped
+ * national number can exceed 15 digits, and capping it would drop the whole
+ * number, so we keep every digit.
  */
 export function extractPhoneNumbers(text: string): string[] {
   const matches = text.match(PHONE_REGEX) ?? [];
   const valid = matches
     .map((m) => m.trim())
-    .filter((m) => {
-      const count = digitCount(m);
-      return count >= 7 && count <= 15;
-    });
+    .filter((m) => digitCount(m) >= 7);
   return unique(valid);
 }
 
